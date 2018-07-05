@@ -15,15 +15,15 @@
                                 <Entry Keyboard="Numeric" TextChanged="OnAgeToChanged" x:Name="ageto" Placeholder="До" />
                             </StackLayout>
                             <StackLayout Orientation="Horizontal">
-                                <Label x:Name="sexlabel" Text="Пол: женский" />
-                                <Switch Toggled="OnSexToggled" x:Name="sex" />
+                                <Label x:Name="sexlabel" Text="Пол: мужской" />
+                                <Switch IsToggled="true" Toggled="OnSexToggled" x:Name="sex" />
                             </StackLayout>
                         </StackLayout>
                         <Button x:Name="findBtn" Clicked="OnFindClicked" Text="Найти" />
                         <ListView x:Name="usersview" SelectionMode="None">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <ImageCell Text="{Binding first_name}" TextColor="Black" ImageSource="{Binding photo_50}" Detail="{Binding bdate}" />
+                                    <ImageCell Tapped="OnListCellTapped" Text="{Binding full_name}" TextColor="Black" ImageSource="{Binding photo_50}" Detail="{Binding age}" />
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>

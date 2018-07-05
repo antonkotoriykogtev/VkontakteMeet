@@ -26,9 +26,14 @@ namespace Login
         {
             user = login;
 			app = parent;
-			Title = "VkMeet";
+            Title = "Поиск по интересам";
             InitializeComponent();
             page = 0;
+        }
+
+        void OnListCellTapped(object sender, System.EventArgs e)
+        {
+            
         }
 
         void OnSexToggled(object sender, Xamarin.Forms.ToggledEventArgs e)
@@ -58,8 +63,32 @@ namespace Login
 
 	    async void OnFindClicked(object sender, System.EventArgs e) {
             page = 0;
+            token = user.Token;
+            int sexnum;
+            string interestring;
+            if (!Equals(interests.Text, null))
+            {
+                interestring = Uri.EscapeDataString(interests.Text);
+            }
+            else
+            {
+                interestring = "";
+            }
+            if (sex.IsToggled)
+            {
+                sexnum = 2;
+            }
+            else
+            {
+                sexnum = 1;
+            }
+            reqUri = $"https://api.vk.com/method/users.search?v=5.80&clientId=6622922&access_token={token}&fields=photo_50,bdate&interests={interestring}&age_from={agefrom.Text}&age_to={ageto.Text}&sex={sexnum}&count={count}";
             var r = await GetVkUsers();
-            ObservableCollection<VkApiItems> users = new ObservableCollection<VkApiItems>(r.Response.Items);
+            ObservableCollection<UserItems> users = new ObservableCollection<UserItems>();
+            for (int i = 0; i < r.Response.Items.Length; ++i)
+            {
+                users.Add(new UserItems(r.Response.Items[i]));
+            }
             usersview.ItemsSource = users;
 		}
 
@@ -68,25 +97,9 @@ namespace Login
             var result = new VkApiResponse();
             using (var client = new HttpClient())
             {
-                token = user.Token;
-                int sexnum;
-                string interestring;
-                if (!Equals(interests.Text, null)) {
-                    interestring = Uri.EscapeDataString(interests.Text);
-                }
-                else {
-                    interestring = "";
-                }
-                if (sex.IsToggled) {
-                    sexnum = 2;
-                }
-                else {
-                    sexnum = 1;
-                }
-                reqUri = $"https://api.vk.com/method/users.search?v=5.80&clientId=6622922&access_token={token}&fields=photo_50,bdate&interests={interestring}&age_from={agefrom.Text}&age_to={ageto.Text}&sex={sexnum}&count={count}";
                 var request = new HttpRequestMessage
                 {
-                    RequestUri = Uri(reqUri) + "&offset=" + (count * page).ToString();
+                    RequestUri = new Uri(reqUri + "&offset=" + (count * page).ToString()),
                     Method = HttpMethod.Get
                 };
 

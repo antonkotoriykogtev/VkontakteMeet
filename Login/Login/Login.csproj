@@ -49,6 +49,7 @@
     <Compile Include="VkApiResponse.cs" />
     <Compile Include="ResponseVkApiBody.cs" />
     <Compile Include="VkApiItems.cs" />
+    <Compile Include="EmptyClass.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
