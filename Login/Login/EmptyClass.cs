@@ -7,22 +7,22 @@ namespace Login
     public class UserItems
     {
         public string id { get; set; }
-        public string full_name { get; set; }
-        public string age { get; set; }
-        public string photo_50 { get; set; }
+        public string text { get; set; }
+        public string detail { get; set; }
+        public string imagesource { get; set; }
         public UserItems(VkApiItems old)
         {
-            age = "";
+            string age = "";
             try
             {
                 DateTime today = DateTime.Today;
                 if (Equals(old.bdate, null))
                 {
-                    this.age = "";
+                    age = "";
                 }
                 if (old.bdate.Length - old.bdate.Replace(".", "").Length < 2)
                 {
-                    this.age = "";
+                    age = "";
                 }
                 else
                 {
@@ -36,8 +36,12 @@ namespace Login
             finally
             {
                 id = old.id;
-                full_name = old.first_name + " " + old.last_name;
-                photo_50 = old.photo_50;
+                text = old.first_name + " " + old.last_name;
+                if (!Equals(age, "")) {
+                    text += ", " + age;
+                }
+                detail = "vk.com/id" + id.ToString();
+                imagesource = old.photo_50;
             }
         }
     }

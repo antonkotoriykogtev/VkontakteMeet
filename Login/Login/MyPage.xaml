@@ -23,7 +23,7 @@
                         <ListView x:Name="usersview" SelectionMode="None">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <ImageCell Tapped="OnListCellTapped" Text="{Binding full_name}" TextColor="Black" ImageSource="{Binding photo_50}" Detail="{Binding age}" />
+                                    <ImageCell Tapped="OnListCellTapped" Text="{Binding text}" TextColor="Black" ImageSource="{Binding imagesource}" Detail="{Binding detail}" />
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
